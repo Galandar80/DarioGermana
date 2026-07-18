@@ -1,5 +1,12 @@
 {
   "rewrites": [
-    { "source": "/((?!assets/|images/|robots.txt|sitemap.xml).*)", "destination": "/index.html" }
+    { "source": "/album/te-lo-dico-cosi", "destination": "/seo/album-te-lo-dico-cosi.html" },
+    { "source": "/album/no-direction", "destination": "/seo/album-no-direction.html" },
+    { "source": "/album/zampa-360-gradi", "destination": "/seo/album-zampa-360-gradi.html" },
+    { "source": "/album/sweat-of-the-sands", "destination": "/seo/album-sweat-of-the-sands.html" },
+    { "source": "/brani/mille-cuori", "destination": "/seo/brano-mille-cuori.html" },
+    { "source": "/brani/cuore-graffiato", "destination": "/seo/brano-cuore-graffiato.html" },
+    { "source": "/brani/la-neve-non-avvisa", "destination": "/seo/brano-la-neve-non-avvisa.html" },
+    { "source": "/((?!assets/|images/|seo/|robots.txt|sitemap.xml).*)", "destination": "/index.html" }
   ]
 }
