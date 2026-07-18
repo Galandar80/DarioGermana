@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://molesound-music.galandar82.chatgpt.site/sitemap.xml
+Sitemap: https://dario-germana.vercel.app/sitemap.xml
