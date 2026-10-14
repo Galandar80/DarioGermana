@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/brani/draghi-di-carta", "destination": "/seo/brano-draghi-di-carta.html" },
     { "source": "/album/te-lo-dico-cosi", "destination": "/seo/album-te-lo-dico-cosi.html" },
     { "source": "/album/no-direction", "destination": "/seo/album-no-direction.html" },
     { "source": "/album/zampa-360-gradi", "destination": "/seo/album-zampa-360-gradi.html" },

@@ -1,6 +1,6 @@
 // CONTENUTI MODIFICABILI: aggiungi i nuovi elementi all'inizio degli elenchi.
 export const videos = [
-  { title: 'Draghi Di Carta', youtubeId: '7xhpbrSe-SQ', description: 'Videoclip ufficiale di Draghi Di Carta.', songPath: '' },
+  { title: 'Draghi Di Carta', youtubeId: '7xhpbrSe-SQ', description: 'Videoclip ufficiale di Draghi Di Carta.', songPath: '/brani/draghi-di-carta' },
   { title: 'Man Of The Night', youtubeId: 'BqRmR_hoSqA', description: 'Videoclip ufficiale di Man Of The Night.', songPath: '' },
   { title: 'Real Hero', youtubeId: 'giraxfPxHW8', description: 'Videoclip ufficiale di Real Hero.', songPath: '' },
   { title: 'Oh, there’s a story I must tell... Magò', youtubeId: 'f1n76Vosdy0', description: 'Videoclip ufficiale di Oh, there’s a story I must tell... Magò.', songPath: '' },

@@ -4,6 +4,14 @@ const origin = 'https://dario-germana.vercel.app';
 
 const pages = [
   {
+    path: '/brani/draghi-di-carta',
+    output: 'brano-draghi-di-carta.html',
+    title: 'Draghi Di Carta — Brano di Dario Germanà',
+    description: 'Ascolta Draghi Di Carta di Dario Germanà su Spotify e guarda il videoclip ufficiale. Scopri il catalogo musicale di MoleSound.',
+    image: '/images/draghi-di-carta.jpg',
+    schemaType: 'MusicRecording',
+  },
+  {
     path: '/album/te-lo-dico-cosi',
     output: 'album-te-lo-dico-cosi.html',
     title: 'Te lo dico così — Album di Dario Germanà',

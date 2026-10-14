@@ -58,6 +58,7 @@ const albumUrl = (id) => `https://open.spotify.com/album/${id}`;
 const trackUrl = (id) => `https://open.spotify.com/track/${id}`;
 const albumSlugs = ['te-lo-dico-cosi', 'no-direction', 'zampa-360-gradi', 'sweat-of-the-sands'];
 const featuredSongs = [
+  { slug: 'draghi-di-carta', title: 'Draghi Di Carta', meta: 'Singolo · 2026', trackId: '4RAbXw4ztzlEb1lLpsDGx4', cover: '/images/draghi-di-carta.jpg', eyebrow: 'Ascolta e guarda', text: 'Scopri Draghi Di Carta: ascolta il brano completo su Spotify e guarda il videoclip ufficiale.', video: '7xhpbrSe-SQ' },
   { slug: 'mille-cuori', title: 'Mille Cuori', meta: 'Singolo · 2026', trackId: '4BzSebu2dNibLDRuM1vjTj', cover: '/images/mille-cuori.jpg', eyebrow: 'Identità e libertà', text: 'Un brano diretto che mette al centro il diritto di seguire la propria voce, anche quando il mondo prova a imporre una direzione diversa.', video: 'Jq852TGFrBc' },
   { slug: 'cuore-graffiato', title: 'Cuore Graffiato', meta: 'Da “Te lo dico così” · 2026', trackId: '7hMtotK8gRLVtxCAQ8ymf4', cover: '/images/te-lo-dico-cosi.jpg', eyebrow: 'Fragilità e resistenza', text: 'Una canzone sull’impronta lasciata dalle esperienze: ferite visibili e invisibili che diventano parte della propria forza.' },
   { slug: 'la-neve-non-avvisa', title: 'La Neve Non Avvisa', meta: 'Da “Te lo dico così” · 2026', trackId: '2lJE5aWB6r8IZOL5zdl8u0', cover: '/images/te-lo-dico-cosi.jpg', eyebrow: 'Cambiamento improvviso', text: 'Un racconto per immagini sul modo in cui alcuni cambiamenti arrivano senza preavviso e ridisegnano il paesaggio interiore.' },
@@ -97,8 +98,8 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeAlbum, setActiveAlbum] = useState(0);
   const [playing, setPlaying] = useState(null);
-  const [platform, setPlatform] = useState('youtube');
-  const [visibleVideos] = useState(() => [...videos].sort(() => Math.random() - 0.5).slice(0, 2));
+  const [platform, setPlatform] = useState('spotify');
+  const [visibleVideos] = useState(() => ['Draghi Di Carta', 'Mille Cuori'].map(title => videos.find(video => video.title === title)).filter(Boolean));
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -127,8 +128,15 @@ function App() {
       <div className="noise" /><div className="orb orb-one" /><div className="orb orb-two" />
       <p className="eyebrow"><Sparkles size={15} /> Autore · Digital music producer</p>
       <h1>DARIO<br /><em>GERMANÀ</em></h1>
-      <div className="hero-bottom"><p>Parole, melodie e produzione digitale. Un catalogo musicale che attraversa pop italiano, immaginari notturni e sperimentazione.</p><button className="circle-button" onClick={() => go('#albums')}><ArrowDown /></button></div>
+      <div className="hero-bottom"><p>Parole, melodie e produzione digitale. Un catalogo musicale che attraversa pop italiano, immaginari notturni e sperimentazione.</p><button className="circle-button" aria-label="Scopri i brani in evidenza" onClick={() => go('#ascolta')}><ArrowDown /></button></div>
+      <div className="hero-listen"><a className="spotify-button" href={trackUrl(featuredSongs[0].trackId)} target="_blank" rel="noreferrer">Ascolta Draghi Di Carta <ArrowUpRight size={17}/></a><a href="#ascolta" className="hero-discover">Scopri i brani in evidenza <ArrowDown size={16}/></a></div>
       <Waveform />
+    </section>
+
+    <section className="campaign-section section" id="ascolta">
+      <div className="section-head"><div><span className="kicker">INIZIA DA QUI</span><h2>Due brani da scoprire.</h2><p>Arrivi da un video? Scegli il brano e ascoltalo completo su Spotify.</p></div></div>
+      <div className="campaign-grid">{featuredSongs.slice(0, 2).map(song => <article className="campaign-card" key={song.slug}><a href={`/brani/${song.slug}`}><img src={song.cover} alt={`Copertina di ${song.title}`}/></a><div><h3>{song.title}</h3><div className="cta-row"><a className="spotify-button" href={trackUrl(song.trackId)} target="_blank" rel="noreferrer">Ascolta su Spotify <ArrowUpRight size={17}/></a><a className="campaign-detail" href={`/brani/${song.slug}`}>Guarda il videoclip <ArrowUpRight size={16}/></a></div></div></article>)}</div>
+      <p className="campaign-note">Se un brano ti piace, salvalo su Spotify. Segui Dario Germanà per ritrovare il catalogo.</p><a className="campaign-detail" href={spotifyArtist} target="_blank" rel="noreferrer">Vai al profilo Spotify <ArrowUpRight size={16}/></a>
     </section>
 
     <section className="latest-release section">
@@ -147,15 +155,15 @@ function App() {
 
     <section className="singles section" id="singles">
       <div className="section-head"><div><span className="kicker">02 / PUBBLICAZIONI</span><h2>Singoli</h2></div><Music2 size={52} strokeWidth={1} /></div>
-      <div className="single-grid">{singles.map(([title, meta, albumId, cover], index) => { const trackId=['496pXrSeHjbinW8TLDloTU','4RAbXw4ztzlEb1lLpsDGx4','4BzSebu2dNibLDRuM1vjTj','2ineXHm9gSUabpAWykpaNj','5Ak83UT9hQHZzTGJ8UpJXY'][index]; return <article className="single-card" key={albumId}><div><img src={cover} alt={`Copertina di ${title}`} /><button className="play-badge" onClick={() => playPreview(trackId,title,cover)} aria-label={`Ascolta ${title}`}>{playing?.id===trackId&&!playing.paused?<Pause fill="currentColor"/>:<Play fill="currentColor"/>}</button></div><h3>{title}</h3><p>{meta}</p><a href={albumUrl(albumId)} target="_blank" rel="noreferrer">Spotify <ExternalLink size={13}/></a></article>;})}</div>
+      <div className="single-grid">{singles.map(([title, meta, albumId, cover], index) => { const trackId=['496pXrSeHjbinW8TLDloTU','4RAbXw4ztzlEb1lLpsDGx4','4BzSebu2dNibLDRuM1vjTj','2ineXHm9gSUabpAWykpaNj','5Ak83UT9hQHZzTGJ8UpJXY'][index]; return <article className="single-card" key={albumId}><div><img src={cover} alt={`Copertina di ${title}`} /><button className="play-badge" onClick={() => playPreview(trackId,title,cover)} aria-label={`Ascolta ${title}`}>{playing?.id===trackId&&!playing.paused?<Pause fill="currentColor"/>:<Play fill="currentColor"/>}</button></div><h3>{title}</h3><p>{meta}</p><a href={trackUrl(trackId)} target="_blank" rel="noreferrer">Spotify <ExternalLink size={13}/></a></article>;})}</div>
     </section>
 
-    <section className="videos-section section" id="video"><div className="section-head"><div><span className="kicker"><Video size={14}/> 03 / VIDEO</span><h2>Videoclip</h2><p className="random-note">Una selezione casuale dal catalogo video. Ricarica la pagina per scoprirne altri.</p></div></div><div className="videos-grid">{visibleVideos.map(video=><article className="video-card" key={video.youtubeId}><div className="video-frame"><iframe src={`https://www.youtube.com/embed/${video.youtubeId}`} title={`${video.title} — videoclip ufficiale`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div><div><h3>{video.title}</h3><p>{video.description}</p>{video.songPath&&<a href={video.songPath}>Scopri il brano <ArrowUpRight size={16}/></a>}</div></article>)}</div></section>
+    <section className="videos-section section" id="video"><div className="section-head"><div><span className="kicker"><Video size={14}/> 03 / VIDEO</span><h2>Videoclip</h2><p className="random-note">I videoclip dei due brani in evidenza: Draghi Di Carta e Mille Cuori.</p></div></div><div className="videos-grid">{visibleVideos.map(video=><article className="video-card" key={video.youtubeId}><div className="video-frame"><iframe src={`https://www.youtube.com/embed/${video.youtubeId}`} title={`${video.title} — videoclip ufficiale`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading="lazy" /></div><div><h3>{video.title}</h3><p>{video.description}</p>{video.songPath&&<a href={video.songPath}>Scopri il brano <ArrowUpRight size={16}/></a>}</div></article>)}</div></section>
 
     <section className="song-stories section" id="songs"><div className="section-head"><div><span className="kicker">04 / STORIE DEI BRANI</span><h2>Dentro le canzoni</h2></div><Music2 size={52} strokeWidth={1}/></div><div className="story-grid">{featuredSongs.map(song=><a className="story-card" href={`/brani/${song.slug}`} key={song.slug}><img src={song.cover} alt=""/><div><span>{song.eyebrow}</span><h3>{song.title}</h3><p>{song.text}</p><b>Leggi e ascolta <ArrowUpRight size={15}/></b></div></a>)}</div></section>
 
     <section className="spotify-section section" id="platforms">
-      <div className="spotify-intro"><span className="kicker">03 / ASCOLTA ORA</span><h2>Tutta la musica.<br />Qui dentro.</h2><p>Con YouTube Music puoi riprodurre i brani completi senza lasciare il sito. Puoi anche scegliere il player della tua piattaforma preferita.</p><div className="platform-links">{Object.entries(officialChannels).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{platformPlayers[key].label}<ArrowUpRight size={14}/></a>)}</div></div>
+      <div className="spotify-intro"><span className="kicker">03 / ASCOLTA ORA</span><h2>Tutta la musica.<br />Qui dentro.</h2><p>Ascolta su Spotify oppure scegli la tua piattaforma preferita. Con YouTube Music puoi riprodurre i brani completi anche qui.</p><div className="platform-links">{Object.entries(officialChannels).map(([key,url])=><a key={key} href={url} target="_blank" rel="noreferrer">{platformPlayers[key].label}<ArrowUpRight size={14}/></a>)}</div></div>
       <div className="multi-player"><div className="platform-tabs">{Object.entries(platformPlayers).map(([key,item])=><button key={key} className={platform===key?'active':''} onClick={()=>setPlatform(key)}>{item.label}</button>)}</div><div className="spotify-frame"><iframe key={platform} title={`${platformPlayers[platform].label} di Dario Germanà`} src={platformPlayers[platform].src} width="100%" height={platformPlayers[platform].height} frameBorder="0" allowFullScreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" /></div></div>
     </section>
 
