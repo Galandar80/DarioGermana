@@ -26,3 +26,12 @@
 .external-player-placeholder button{border:0;border-radius:100px;padding:12px 22px;background:var(--acid);color:#111;font-weight:600;cursor:pointer}
 .external-player-placeholder small{max-width:340px;color:#aaa;line-height:1.5}
 .video-frame>.external-player-placeholder{position:absolute;inset:0;min-height:0!important;border-radius:0}
+
+/* Accessible mobile navigation and reduced-motion preference. */
+.mobile-nav .nav-cta{justify-content:center;min-height:44px;text-decoration:none}
+section[id]{scroll-margin-top:90px}
+.contact-form input:focus-visible,.contact-form select:focus-visible,.contact-form textarea:focus-visible{outline:3px solid #111;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
