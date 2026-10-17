@@ -35,3 +35,8 @@ section[id]{scroll-margin-top:90px}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* SEO-01-R2: links stay available independently of the album selector. */
+.album-page-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 24px; }
+.album-page-links a { max-width: 100%; overflow-wrap: anywhere; }
+.album-page-links a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
