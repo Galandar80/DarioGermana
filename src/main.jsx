@@ -113,6 +113,7 @@ function App() {
   const [platform, setPlatform] = useState('spotify');
   const [visibleVideos] = useState(() => ['Draghi Di Carta', 'Mille Cuori'].map(title => videos.find(video => video.title === title)).filter(Boolean));
   const audioRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -120,7 +121,27 @@ function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const go = (id) => { setMenuOpen(false); document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' }); };
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
+  const go = (id) => {
+    setMenuOpen(false);
+    const target = document.querySelector(id);
+    target?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    if (target) {
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+    }
+  };
   const current = albums[activeAlbum];
   const playPreview = (id, title, cover) => {
     if (playing?.id === id && !audioRef.current?.paused) { audioRef.current.pause(); setPlaying({ id, title, cover, paused: true }); return; }
@@ -132,9 +153,9 @@ function App() {
     <nav className={scrolled ? 'nav scrolled' : 'nav'}>
       <button className="brand artist-brand" onClick={() => go('#home')}><span>DARIO</span> GERMANÀ<i /></button>
       <div className="desktop-nav"><button onClick={() => go('#albums')}>Album</button><button onClick={() => go('#video')}>Video</button><button onClick={() => go('#songs')}>Brani</button><button onClick={() => go('#about')}>Biografia</button><button onClick={() => go('#news')}>News</button><button onClick={() => go('#contact')}>Contatti</button><a className="nav-cta" href={spotifyArtist} target="_blank" rel="noreferrer">Spotify <ArrowUpRight size={16} /></a></div>
-      <button className="menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Apri menu">{menuOpen ? <X /> : <Menu />}</button>
+      <button ref={menuButtonRef} className="menu" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}>{menuOpen ? <X /> : <Menu />}</button>
     </nav>
-    {menuOpen && <div className="mobile-nav"><button onClick={() => go('#albums')}>Album</button><button onClick={() => go('#video')}>Video</button><button onClick={() => go('#songs')}>Brani</button><button onClick={() => go('#about')}>Biografia</button><button onClick={() => go('#news')}>News</button><button onClick={() => go('#contact')}>Contatti</button></div>}
+    {menuOpen && <div className="mobile-nav" id="mobile-navigation"><button onClick={() => go('#albums')}>Album</button><button onClick={() => go('#video')}>Video</button><button onClick={() => go('#songs')}>Brani</button><button onClick={() => go('#about')}>Biografia</button><button onClick={() => go('#news')}>News</button><button onClick={() => go('#contact')}>Contatti</button><a className="nav-cta" href={spotifyArtist} target="_blank" rel="noreferrer">Ascolta su Spotify <ArrowUpRight size={16} /></a></div>}
 
     <section className="hero hero-real" id="home">
       <div className="noise" /><div className="orb orb-one" /><div className="orb orb-two" />
