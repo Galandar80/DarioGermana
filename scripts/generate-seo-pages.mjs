@@ -7,7 +7,7 @@ const pages = [
     path: '/brani/draghi-di-carta',
     output: 'brano-draghi-di-carta.html',
     title: 'Draghi Di Carta — Brano di Dario Germanà',
-    description: 'Ascolta Draghi Di Carta di Dario Germanà su Spotify e guarda il videoclip ufficiale. Scopri il catalogo musicale di MoleSound.',
+    description: 'Draghi di Carta di Dario Germanà affronta il bullismo scolastico e il riscatto personale. Ascolta il brano completo su Spotify e guarda il videoclip ufficiale.',
     image: '/images/draghi-di-carta.jpg',
     schemaType: 'MusicRecording',
   },
