@@ -74,14 +74,7 @@ const previews = {
 
 
 function ExternalPlayer({ src, title, ...props }) {
-  const [loaded, setLoaded] = useState(false);
-  if (loaded) return <iframe src={src} title={title} {...props} />;
-  return <div className="external-player-placeholder" style={{ minHeight: props.height || 220 }}>
-    <Play size={32} aria-hidden="true" />
-    <p>{title}</p>
-    <button type="button" onClick={() => setLoaded(true)}>Carica player</button>
-    <small>Il player si collega alla piattaforma esterna solo dopo il clic.</small>
-  </div>;
+  return <iframe src={src} title={title} {...props} loading="eager" />;
 }
 
 function Waveform() {
