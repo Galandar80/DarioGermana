@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Analytics } from '@vercel/analytics/react';
 import { ArrowDown, ArrowLeft, ArrowUpRight, AtSign, Disc3, ExternalLink, Headphones, Menu, Music2, Newspaper, Pause, Play, Sparkles, Video, X } from 'lucide-react';
 import './styles.css';
 import { newsItems, videos } from './content.js';
@@ -212,4 +213,21 @@ function App() {
   </main>;
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+// Production traffic only. Use ?analytics=off for QA without inflating reports.
+// Strip query strings and fragments so form values or campaign parameters are not collected.
+function beforePageView(event) {
+  const url = new URL(event.url);
+  url.search = '';
+  url.hash = '';
+  return { ...event, url: url.toString() };
+}
+
+const collectPageViews = import.meta.env.PROD
+  && window.location.hostname === 'dario-germana.vercel.app'
+  && !new URLSearchParams(window.location.search).has('analytics');
+
+createRoot(document.getElementById('root')).render(<>
+  <App />
+  {collectPageViews && <Analytics mode="production" beforeSend={beforePageView} />}
+</>);
+
